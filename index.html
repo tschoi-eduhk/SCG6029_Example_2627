@@ -76,10 +76,12 @@
         }
       };
 
-      const filteredFeed = feed.filter(item =>
-        (item.comment && item.comment.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (item.studentId && item.studentId.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
+      const filteredFeed = feed.filter(item => {
+        const q = searchQuery.toLowerCase();
+        const comment = String(item.comment ?? '').toLowerCase();
+        const studentId = String(item.studentId ?? '').toLowerCase();
+        return comment.includes(q) || studentId.includes(q);
+      });
 
       return (
         <div className="max-w-3xl mx-auto px-4 py-8">
